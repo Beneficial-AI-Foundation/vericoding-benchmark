@@ -18,7 +18,7 @@ The folder `specs` contains all 12,504 tasks in Dafny, Lean and Verus, which inc
 
 ## JSONL
 
-The folder `jsonl` contains the tasks and issues sorted into the different languages, parsed into different components, and stored as JSON lines for easier experimentation.
+The folder `jsonl` contains the tasks and issues sorted into the different languages, parsed into different components, and stored as JSON lines for easier experimentation. It also contains natural language descriptions for some of the tasks, which are not contained in the files in the `specs` folder.
 
 ## Vericoded
 
