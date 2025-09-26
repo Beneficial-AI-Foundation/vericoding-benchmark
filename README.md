@@ -24,9 +24,9 @@ The folder `jsonl` contains the tasks and issues sorted into the different langu
 
 The folder `vericoded` will contain some of the tasks with solutions filled in by an AI vericoder.
 
-## Humancoded
+## Handcoded
 
-The folder `humancoded` will contain some of the tasks with solutions filled in by human coders.
+The folder `handcoded` will contain some of the tasks with solutions filled in by human coders.
 
 ## Original Sources
 
