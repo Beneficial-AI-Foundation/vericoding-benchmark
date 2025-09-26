@@ -1,0 +1,35 @@
+-- <vc-preamble>
+import Mathlib
+import Mathlib.Algebra.Polynomial.Basic
+import Std.Data.HashMap
+-- </vc-preamble>
+
+-- <vc-helpers>
+-- </vc-helpers>
+
+-- <vc-definitions>
+def implementation (n p: Nat) : Nat :=
+  sorry
+-- </vc-definitions>
+
+-- <vc-theorems>
+def problem_spec
+-- function signature
+(implementation: Nat → Nat → Nat)
+-- inputs
+(n p: Nat) :=
+-- spec
+let spec (result: Nat) :=
+0 < p ∧
+result < p ∧
+(∃ k : Nat, p * k + result = Nat.pow 2 n)
+-- program termination
+∃ result, implementation n p = result ∧
+spec result
+
+theorem correctness
+(n p: Nat)
+: problem_spec implementation n p
+:= by
+  sorry
+-- </vc-theorems>
