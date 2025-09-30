@@ -1,6 +1,6 @@
 # A Benchmark For Vericoding: Formally Verified Program Synthesis
 
-Our paper (currently undergoing review) can be found on [ArXiv]().
+Our paper (currently undergoing review) can be found on [ArXiv](https://www.arxiv.org/abs/2509.22908).
 
 Our scripts can be found in this [GitHub repo](https://github.com/beneficial-AI-Foundation/vericoding).
 
