@@ -1,0 +1,21 @@
+[project]
+name = "hf"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Quinn Dougherty", email = "quinn.dougherty.forall@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "datasets>=4.2.0",
+    "jsonlines>=4.0.0",
+    "typer>=0.20.0",
+]
+
+[project.scripts]
+concat-jsonl = "hf:main"
+
+[build-system]
+requires = ["uv_build>=0.9.4,<0.10.0"]
+build-backend = "uv_build"
