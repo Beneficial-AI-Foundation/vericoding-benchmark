@@ -12404,7 +12404,7 @@ VV0072,verus,verina,verina_advanced_73_task,,0,,-1,-1,-1,-1,-1,-1,,1.0
 VV0073,verus,verina,verina_advanced_74_task,,0,,-1,-1,-1,-1,-1,-1,,1.0
 VV0074,verus,verina,verina_advanced_75_task,,0,,-1,-1,-1,-1,-1,-1,,1.0
 VV0075,verus,verina,verina_advanced_76_task,,0,,-1,-1,-1,-1,-1,-1,,1.0
-VV0076,verus,verina,verina_advanced_77_task,,0,,-1,-1,-1,-1,-1,-1,,1.0
+VV0076,verus,verina,verina_advanced_77_task,weak spec https://github.com/Beneficial-AI-Foundation/vericoding/issues/314,0,,-1,-1,-1,-1,-1,-1,,1.0
 VV0077,verus,verina,verina_advanced_78_task,,0,,-1,-1,-1,-1,-1,-1,,1.0
 VV0078,verus,verina,verina_advanced_79_task,,0,,-1,-1,-1,-1,-1,-1,,1.0
 VV0079,verus,verina,verina_advanced_80_task,,0,,-1,-1,-1,-1,-1,-1,,1.0
