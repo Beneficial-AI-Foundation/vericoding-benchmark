@@ -19,7 +19,7 @@ Sergiu Bursuc, Theodore Ehrenborg, Shaowei Lin, Lacramioara Astefanoaei, Ionel E
 
 ## Usage:
 
-Edit the escape characters out of the triple backticks in the prompt (which are there so they don't mess up the markdown in this card) and put this in `scrpt.py` and then run `uv run scrpt.py` (must preserve frontmatter comment / pyproject.toml fragment)
+Edit the escape characters out of the triple backticks in the prompt (which are there so they don't mess up the markdown in this card) and put this in `scrpt.py` and then run `uv run scrpt.py` (must preserve frontmatter comment / pyproject.toml fragment). Requires anthropic API key. 
 
 ``` python
 # /// script
@@ -34,6 +34,7 @@ Edit the escape characters out of the triple backticks in the prompt (which are 
 """
 Download the vericoding dataset from HuggingFace and use pydantic-ai to solve a Lean sample.
 """
+
 from pathlib import Path
 from datasets import load_dataset
 from pydantic import BaseModel
@@ -50,12 +51,15 @@ load_dotenv()
 
 class LeanSolution(BaseModel):
     """Structured output for a Lean verification problem solution."""
+
     code: str
     explanation: str
     verification_status: str
 
 
-def download_dataset(dataset_name: str = "beneficial-ai-foundation/vericoding") -> list[dict]:
+def download_dataset(
+    dataset_name: str = "beneficial-ai-foundation/vericoding",
+) -> list[dict]:
     """
     Download the vericoding dataset from HuggingFace.
 
@@ -78,7 +82,9 @@ def filter_lean_samples(samples: list[dict]) -> list[dict]:
     return lean_samples
 
 
-async def create_lean_agent(model_name: str = "claude-sonnet-4-5-20250929") -> tuple[Agent, MCPServerStdio]:
+async def create_lean_agent(
+    model_name: str = "claude-sonnet-4-5-20250929",
+) -> tuple[Agent, MCPServerStdio]:
     """
     Create a pydantic-ai agent configured for solving Lean verification problems.
 
@@ -92,9 +98,7 @@ async def create_lean_agent(model_name: str = "claude-sonnet-4-5-20250929") -> t
 
     # Initialize Lean LSP MCP server
     mcp_server = MCPServerStdio(
-        command="uvx",
-        args=["lean-lsp-mcp"],
-        cwd=Path(__file__).parent
+        command="uvx", args=["lean-lsp-mcp"], cwd=Path(__file__).parent
     )
 
     agent = Agent(
@@ -121,7 +125,7 @@ You must return a structured response with exactly these fields:
 - explanation: Your reasoning and approach
 - verification_status: Your confidence in the solution (high/medium/low)
 """,
-        mcp_servers=[mcp_server]
+        mcp_servers=[mcp_server],
     )
 
     return agent, mcp_server
@@ -196,9 +200,9 @@ async def solve_lean_problem(agent: Agent, sample: dict) -> LeanSolution:
 
 Here is the Lean code with sorries to fill in:
 
-\`\`\`lean
+\```lean
 {code_with_sorries}
-\`\`\`
+\```
 
 Please analyze the code and provide your solution."""
 
@@ -254,7 +258,10 @@ def main():
 
         # Group samples by source
         sources = ["fvapps", "numpy_triple", "dafnybench"]
-        samples_by_source = {source: [s for s in lean_samples if s.get("source") == source] for source in sources}
+        samples_by_source = {
+            source: [s for s in lean_samples if s.get("source") == source]
+            for source in sources
+        }
 
         # Try to pick one sample from each source, fall back to any lean samples if not available
         selected_samples = []
@@ -270,7 +277,9 @@ def main():
 
         print(f"\nSelected {len(selected_samples)} samples:")
         for sample in selected_samples:
-            print(f"  - {sample.get('id', 'unknown')} (source: {sample.get('source', 'unknown')})")
+            print(
+                f"  - {sample.get('id', 'unknown')} (source: {sample.get('source', 'unknown')})"
+            )
 
         # Create agent with MCP server
         print("\nInitializing Lean LSP MCP server...")
@@ -280,25 +289,27 @@ def main():
         async with mcp_server:
             # Solve each problem
             for i, sample in enumerate(selected_samples, 1):
-                print(f"\n{'='*80}")
-                print(f"PROBLEM {i}/{len(selected_samples)}: {sample.get('id', 'unknown')}")
-                print(f"{'='*80}")
+                print(f"\n{'=' * 80}")
+                print(
+                    f"PROBLEM {i}/{len(selected_samples)}: {sample.get('id', 'unknown')}"
+                )
+                print(f"{'=' * 80}")
 
                 solution = await solve_lean_problem(agent, sample)
 
                 # Write solution to file
-                write_solution_to_file(sample.get('id', 'unknown'), solution)
+                write_solution_to_file(sample.get("id", "unknown"), solution)
 
                 # Display results
-                print("\n" + "="*80)
+                print("\n" + "=" * 80)
                 print("SOLUTION")
-                print("="*80)
+                print("=" * 80)
                 print("\nCode:")
                 print(solution.code)
                 print("\nExplanation:")
                 print(solution.explanation)
                 print(f"\nVerification Status: {solution.verification_status}")
-                print("="*80)
+                print("=" * 80)
 
     asyncio.run(run())
 ```

@@ -8,20 +8,20 @@ def main() -> None:
     jsonl_dir = Path("..") / "jsonl"
     output_dir = Path("artifacts")
     output_dir.mkdir(exist_ok=True)
-    
+
     train_file = output_dir / "train.jsonl"
-    
+
     # Find all JSONL files
     jsonl_files = sorted(jsonl_dir.glob("*.jsonl"))
-    
+
     if not jsonl_files:
         print(f"No JSONL files found in {jsonl_dir}")
         return
-    
+
     print(f"Found {len(jsonl_files)} JSONL files to concatenate:")
     for f in jsonl_files:
         print(f"  - {f.name}")
-    
+
     # Concatenate all JSONL files
     total_lines = 0
     with jsonlines.open(train_file, mode="w") as writer:
@@ -32,7 +32,7 @@ def main() -> None:
                     writer.write(obj)
                     file_lines += 1
                     total_lines += 1
-            
+
             print(f"  Processed {file_lines} lines from {jsonl_file.name}")
-    
+
     print(f"\nTotal: {total_lines} lines written to {train_file}")
