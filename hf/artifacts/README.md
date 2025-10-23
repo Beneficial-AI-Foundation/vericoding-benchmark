@@ -83,7 +83,7 @@ async def create_lean_agent(model_name: str = "claude-sonnet-4-5-20250929") -> t
     Create a pydantic-ai agent configured for solving Lean verification problems.
 
     Args:
-        model_name: The model to use (default: claude-sonnet-4-5-latest)
+        model_name: The model to use (default: claude-sonnet-4-5-20250929)
 
     Returns:
         Tuple of (Configured pydantic-ai Agent, MCP server)
