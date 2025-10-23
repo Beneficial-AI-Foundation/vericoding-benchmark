@@ -312,6 +312,9 @@ def main():
                 print("=" * 80)
 
     asyncio.run(run())
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## Vericoding and Verilib
