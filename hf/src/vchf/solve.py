@@ -1,36 +1,3 @@
----
-license: mit
-task_categories:
-- text-generation
-tags:
-- code
-- agent
-pretty_name: Vericoding
-size_categories:
-- 1K<n<10K
----
-# Vericoding
-
-[A benchmark for vericoding: formally verified program synthesis](https://arxiv.org/abs/2509.22908)
-
-Sergiu Bursuc, Theodore Ehrenborg, Shaowei Lin, Lacramioara Astefanoaei, Ionel Emilian Chiosa, Jure Kukovec, Alok Singh, Oliver Butterley, Adem Bizid, Quinn Dougherty, Miranda Zhao, Max Tan, Max Tegmark 
-
-> We present and test the largest benchmark for vericoding, LLM-generation of formally verified code from formal specifications - in contrast to vibe coding, which generates potentially buggy code from a natural language description. Our benchmark contains 12,504 formal specifications, with 3,029 in Dafny, 2,334 in Verus/Rust and 7,141 in Lean. Of these, 6,174 are new unseen problems. We find vericoding success rates of 27% in Lean, 44% in Verus/Rust and 82% in Dafny using off-the-shelf LLMs. Adding natural-language descriptions does not significantly improve performance. We also find that LLM progress has improved progress on pure Dafny verification from 68% to 96% over the past year. The benchmark and vericoding results are shared at this [https URL](https://github.com/Beneficial-AI-Foundation/vericoding-benchmark)
-
-## Usage:
-
-Edit the escape characters out of the triple backticks in the prompt (which are there so they don't mess up the markdown in this card) and put this in `scrpt.py` and then run `uv run scrpt.py` (must preserve frontmatter comment / pyproject.toml fragment)
-
-``` python
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#     "datasets>=4.2.0",
-#     "pydantic>=2.12.3",
-#     "pydantic-ai>=1.2.1",
-#     "python-dotenv>=1.1.1",
-# ]
-# ///
 """
 Download the vericoding dataset from HuggingFace and use pydantic-ai to solve a Lean sample.
 """
@@ -196,9 +163,9 @@ async def solve_lean_problem(agent: Agent, sample: dict) -> LeanSolution:
 
 Here is the Lean code with sorries to fill in:
 
-\`\`\`lean
+```lean
 {code_with_sorries}
-\`\`\`
+```
 
 Please analyze the code and provide your solution."""
 
@@ -301,9 +268,3 @@ def main():
                 print("="*80)
 
     asyncio.run(run())
-```
-
-## Vericoding and Verilib
-
-We would like to confine super powerful AI to a box, and build this box out of specifications. To summon this world into being, you might like formal verification and proof synthesis to have stronger movements/communities. One way to galvanize a movement is to make a product. [VeriLib](https://verilib.org) is kinda like a github clone where formal methods are the first class use case (for instance, by hosting on-rails CI to check proofs). In the long run, you only really need or want the human UX of github for specifications, because the code and proofs are background LLM CI jobs.
-

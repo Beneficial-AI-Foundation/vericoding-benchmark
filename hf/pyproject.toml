@@ -1,5 +1,5 @@
 [project]
-name = "hf"
+name = "vchf"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -9,12 +9,17 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "datasets>=4.2.0",
+    "huggingface-hub[cli]>=0.35.3",
     "jsonlines>=4.0.0",
+    "pydantic>=2.12.3",
+    "pydantic-ai>=1.2.1",
+    "python-dotenv>=1.1.1",
     "typer>=0.20.0",
 ]
 
 [project.scripts]
-concat-jsonl = "hf:main"
+concat-jsonl = "vchf:main"
+solve-lean = "vchf.solve:main"
 
 [build-system]
 requires = ["uv_build>=0.9.4,<0.10.0"]

@@ -1,4 +1,5 @@
 artifacts/*.jsonl
+solutions/*.lean
 
 .DS_Store
 .idea
