@@ -8,6 +8,14 @@ The `vericoding_benchmark_v1.csv` provides a list of Vericoding IDs, sources and
 
 The file `vericoding_results_v1.csv` which is a list of the outcomes of all 55,397 experiments involving vericoding tasks across different models.
 
+## [Huggingface](https://huggingface.co/datasets/beneficial-ai-foundation/vericoding)
+
+``` python
+from datasets import load_dataset
+
+dataset = load_dataset("beneficial-ai-foundation/vericoding")
+```
+
 ## Specs
 
 The folder `specs` contains all 12,504 tasks in Dafny, Lean and Verus, which includes the following.
