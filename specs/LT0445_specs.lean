@@ -26,9 +26,9 @@ theorem hermmulx_spec {n : Nat} (c : Vector Float n) :
           -- Base case: position 0 starts at 0
           (if k.val = 0 then 0 else 0) +
           -- Contribution from c[k-1]/2 when k > 0 and k-1 < n
-          (if h1 : k.val > 0 ∧ k.val - 1 < n then c.get ⟨k.val - 1, sorry⟩ / 2 else 0) +
+          (if h1 : k.val > 0 ∧ k.val - 1 < n then c.get ⟨k.val - 1, by exact h1.2⟩ / 2 else 0) +
           -- Contribution from c[k+1]*(k+1) when k+1 < n
-          (if h2 : k.val + 1 < n then c.get ⟨k.val + 1, sorry⟩ * Float.ofNat (k.val + 1) else 0)⌝
+          (if h2 : k.val + 1 < n then c.get ⟨k.val + 1, by exact h2⟩ * Float.ofNat (k.val + 1) else 0)⌝
     ⦄ := by
   sorry
 -- </vc-theorems>
