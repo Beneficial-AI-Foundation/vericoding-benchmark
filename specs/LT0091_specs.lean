@@ -18,7 +18,14 @@ theorem numpy_unpackbits_spec {n : Nat} (a : Vector Nat n)
     ⦃⌜∀ i : Fin n, a.get i < 256⌝⦄
     numpy_unpackbits a
     ⦃⇓result => ⌜∀ i : Fin n, ∀ j : Fin 8,
-                  result.get ⟨i.val * 8 + j.val, sorry⟩ = 
+                  result.get ⟨i.val * 8 + j.val, by
+                        calc
+                          i.val * 8 + j.val < i.val * 8 + 8 := by
+                            exact Nat.add_lt_add_left j.isLt _
+                          _ = (i.val + 1) * 8 := by
+                            rw [Nat.succ_mul]
+                          _ ≤ n * 8 := by
+                            exact Nat.mul_le_mul_right _ i.isLt⟩ = 
                   (a.get i / (2 ^ (7 - j.val))) % 2⌝⦄ := by
   sorry
 -- </vc-theorems>
