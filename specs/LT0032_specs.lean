@@ -23,8 +23,8 @@ theorem tril_spec {rows cols : Nat} (m : Vector (Vector Float cols) rows) (k : I
                       if (i : Int) ≥ (j : Int) - k then (m.get i).get j else 0) ∧
                   -- Sanity check: diagonal elements are preserved when k = 0
                   (k = 0 → ∀ i : Fin (min rows cols), 
-                    have hi : i < rows := by sorry
-                    have hj : i < cols := by sorry
+                    have hi : i < rows := by omega
+                    have hj : i < cols := by omega
                     (result.get ⟨i, hi⟩).get ⟨i, hj⟩ = (m.get ⟨i, hi⟩).get ⟨i, hj⟩) ∧
                   -- Sanity check: all elements preserved when k is very large
                   (k ≥ (cols : Int) → ∀ (i : Fin rows) (j : Fin cols), 
