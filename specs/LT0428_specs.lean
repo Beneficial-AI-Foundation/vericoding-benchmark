@@ -42,7 +42,16 @@ theorem hermevander2d_spec {n : Nat} (x y : Vector Float n) (x_deg y_deg : Nat) 
                    ∃ flattened_coeff : Vector Float ((x_deg + 1) * (y_deg + 1)),
                    -- Coefficient flattening follows row-major order
                    (∀ i : Fin (x_deg + 1), ∀ j : Fin (y_deg + 1),
-                     flattened_coeff.get ⟨(y_deg + 1) * i.val + j.val, sorry⟩ = 
+                     flattened_coeff.get ⟨(y_deg + 1) * i.val + j.val, by
+                         calc
+                           (y_deg + 1) * i.val + j.val = i.val * (y_deg + 1) + j.val := by
+                             rw [Nat.mul_comm]
+                           _ < i.val * (y_deg + 1) + (y_deg + 1) := by
+                             exact Nat.add_lt_add_left j.isLt _
+                           _ = (i.val + 1) * (y_deg + 1) := by
+                             rw [Nat.succ_mul]
+                           _ ≤ (x_deg + 1) * (y_deg + 1) := by
+                             exact Nat.mul_le_mul_right _ i.isLt⟩ = 
                      (coeff_matrix.get i).get j) ∧
                    -- Matrix-vector multiplication gives polynomial evaluation
                    ∀ point_idx : Fin n,

@@ -32,7 +32,7 @@ theorem polyder_spec {n : Nat} (c : Vector Float n) (m : Nat) (scl : Float)
             (fun acc k => acc * (original_idx - k).toFloat) 1.0
           let scale_factor := (List.range m).foldl 
             (fun acc _ => acc * scl) 1.0
-          result.get i = c.get ⟨original_idx, sorry⟩ * factorial_factor * scale_factor
+          result.get i = c.get ⟨original_idx, by omega⟩ * factorial_factor * scale_factor
       )
     ⌝⦄ := by
   sorry

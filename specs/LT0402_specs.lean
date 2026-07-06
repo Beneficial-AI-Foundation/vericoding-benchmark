@@ -45,7 +45,31 @@ theorem chebvander3d_spec {n : Nat} (x y z : Vector Float n) (xdeg ydeg zdeg : N
     chebvander3d x y z xdeg ydeg zdeg
     ⦃⇓V => ⌜∀ (p : Fin n) (i : Fin (xdeg + 1)) (j : Fin (ydeg + 1)) (k : Fin (zdeg + 1)),
             let col_idx : Fin ((xdeg + 1) * (ydeg + 1) * (zdeg + 1)) :=
-              ⟨(ydeg + 1) * (zdeg + 1) * i.val + (zdeg + 1) * j.val + k.val, sorry⟩
+              ⟨(ydeg + 1) * (zdeg + 1) * i.val + (zdeg + 1) * j.val + k.val, by
+                    have h_qr : (zdeg + 1) * j.val + k.val < (ydeg + 1) * (zdeg + 1) := by
+                      calc
+                        (zdeg + 1) * j.val + k.val < (zdeg + 1) * j.val + (zdeg + 1) := by
+                          exact Nat.add_lt_add_left k.isLt _
+                        _ = j.val * (zdeg + 1) + (zdeg + 1) := by
+                          rw [Nat.mul_comm (zdeg + 1) j.val]
+                        _ = (j.val + 1) * (zdeg + 1) := by
+                          rw [Nat.succ_mul]
+                        _ ≤ (ydeg + 1) * (zdeg + 1) := by
+                          exact Nat.mul_le_mul_right _ j.isLt
+                    calc
+                      (ydeg + 1) * (zdeg + 1) * i.val + (zdeg + 1) * j.val + k.val
+                          = ((ydeg + 1) * (zdeg + 1)) * i.val + ((zdeg + 1) * j.val + k.val) := by
+                            rw [Nat.add_assoc]
+                      _ < ((ydeg + 1) * (zdeg + 1)) * i.val + ((ydeg + 1) * (zdeg + 1)) := by
+                        exact Nat.add_lt_add_left h_qr _
+                      _ = ((ydeg + 1) * (zdeg + 1)) * (i.val + 1) := by
+                        rw [← Nat.mul_succ]
+                      _ ≤ ((ydeg + 1) * (zdeg + 1)) * (xdeg + 1) := by
+                        exact Nat.mul_le_mul_left _ i.isLt
+                      _ = (xdeg + 1) * ((ydeg + 1) * (zdeg + 1)) := by
+                        rw [Nat.mul_comm]
+                      _ = (xdeg + 1) * (ydeg + 1) * (zdeg + 1) := by
+                        rw [Nat.mul_assoc]⟩
             (V.get p).get col_idx =
               chebyshevT i.val (x.get p) * chebyshevT j.val (y.get p) * chebyshevT k.val (z.get p)⌝⦄ := by
   sorry

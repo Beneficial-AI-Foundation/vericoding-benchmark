@@ -46,7 +46,15 @@ theorem chebvander2d_spec {n : Nat} (x y : Vector Float n) (xdeg ydeg : Nat) :
     chebvander2d x y xdeg ydeg
     ⦃⇓result => ⌜∀ (k : Fin n) (i : Fin (xdeg + 1)) (j : Fin (ydeg + 1)),
                   let idx := i.val * (ydeg + 1) + j.val
-                  (result.get k).get ⟨idx, by sorry⟩ = 
+                  (result.get k).get ⟨idx, by
+                        calc
+                          idx = i.val * (ydeg + 1) + j.val := rfl
+                          _ < i.val * (ydeg + 1) + (ydeg + 1) := by
+                            exact Nat.add_lt_add_left j.isLt _
+                          _ = (i.val + 1) * (ydeg + 1) := by
+                            rw [Nat.succ_mul]
+                          _ ≤ (xdeg + 1) * (ydeg + 1) := by
+                            exact Nat.mul_le_mul_right _ i.isLt⟩ = 
                   (chebyshevT i.val (x.get k)) * (chebyshevT j.val (y.get k))⌝⦄ := by
   sorry
 -- </vc-preamble>

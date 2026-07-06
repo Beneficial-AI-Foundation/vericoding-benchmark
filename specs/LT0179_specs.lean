@@ -33,8 +33,8 @@ theorem mgrid_spec {rows cols : Nat} (start_r stop_r start_c stop_c : Float)
                   (∀ i : Fin rows, ∀ j : Fin cols,
                     (result.2.get i).get j = start_c + (Float.ofNat j.val) * (stop_c - start_c) / (Float.ofNat cols)) ∧
                   -- Boundary conditions: first/last coordinates match start/stop points
-                  (∀ j : Fin cols, (result.1.get ⟨0, by sorry⟩).get j = start_r) ∧
-                  (∀ i : Fin rows, (result.2.get i).get ⟨0, by sorry⟩ = start_c) ∧
+                  (∀ j : Fin cols, (result.1.get ⟨0, by exact h_rows⟩).get j = start_r) ∧
+                  (∀ i : Fin rows, (result.2.get i).get ⟨0, by exact h_cols⟩ = start_c) ∧
                   -- Mathematical property: coordinates form a complete grid
                   (∀ i : Fin rows, ∀ j : Fin cols, 
                     start_r ≤ (result.1.get i).get j ∧ (result.1.get i).get j < stop_r) ∧

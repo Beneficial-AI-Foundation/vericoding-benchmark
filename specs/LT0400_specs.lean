@@ -17,7 +17,7 @@ theorem chebvander_spec {n : Nat} (x : Vector Float n) (deg : Nat) :
     ⦃⌜True⌝⦄
     chebvander x deg
     ⦃⇓V => ⌜-- T_0(x) = 1 for all x
-            (∀ i : Fin n, (V.get i).get ⟨0, sorry⟩ = 1) ∧
+            (∀ i : Fin n, (V.get i).get ⟨0, by exact Nat.succ_pos deg⟩ = 1) ∧
             -- T_1(x) = x when deg ≥ 1
             (deg ≥ 1 → ∀ i : Fin n, (V.get i).get ⟨1, sorry⟩ = x.get i) ∧
             -- Recurrence relation: T_{k+1}(x) = 2x*T_k(x) - T_{k-1}(x) for k ≥ 1

@@ -43,7 +43,26 @@ theorem lagvander3d_spec {n : Nat} (x y z : Vector Float n) (xdeg ydeg zdeg : Na
     lagvander3d x y z xdeg ydeg zdeg
     ⦃⇓result => ⌜(∀ p : Fin n, ∀ i : Fin (xdeg + 1), ∀ j : Fin (ydeg + 1), ∀ k : Fin (zdeg + 1),
                     let idx := i.val * (ydeg + 1) * (zdeg + 1) + j.val * (zdeg + 1) + k.val
-                    have h_idx : idx < (xdeg + 1) * (ydeg + 1) * (zdeg + 1) := by sorry
+                    have h_idx : idx < (xdeg + 1) * (ydeg + 1) * (zdeg + 1) := by
+                        have h_row : i.val * (ydeg + 1) + j.val < (i.val + 1) * (ydeg + 1) := by
+                          calc
+                            i.val * (ydeg + 1) + j.val < i.val * (ydeg + 1) + (ydeg + 1) := by
+                              exact Nat.add_lt_add_left j.isLt _
+                            _ = (i.val + 1) * (ydeg + 1) := by
+                              rw [Nat.succ_mul]
+                        have h_linear : idx = (i.val * (ydeg + 1) + j.val) * (zdeg + 1) + k.val := by
+                          dsimp [idx]
+                          rw [Nat.add_mul, Nat.mul_assoc]
+                        calc
+                          idx = (i.val * (ydeg + 1) + j.val) * (zdeg + 1) + k.val := h_linear
+                          _ < (i.val * (ydeg + 1) + j.val) * (zdeg + 1) + (zdeg + 1) := by
+                            exact Nat.add_lt_add_left k.isLt _
+                          _ = ((i.val * (ydeg + 1) + j.val) + 1) * (zdeg + 1) := by
+                            rw [Nat.succ_mul]
+                          _ ≤ ((i.val + 1) * (ydeg + 1)) * (zdeg + 1) := by
+                            exact Nat.mul_le_mul_right _ (Nat.succ_le_of_lt h_row)
+                          _ ≤ ((xdeg + 1) * (ydeg + 1)) * (zdeg + 1) := by
+                            exact Nat.mul_le_mul_right _ (Nat.mul_le_mul_right _ i.isLt)
                     (result.get p).get ⟨idx, h_idx⟩ = 
                       laguerrePolynomial i.val (x.get p) * 
                       laguerrePolynomial j.val (y.get p) * 
